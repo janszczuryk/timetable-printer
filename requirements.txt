@@ -1,2 +1,4 @@
 beautifulsoup4==4.12.2
+xhtml2pdf==0.2.13
+chevron==0.14.0
 requests==2.31.0
