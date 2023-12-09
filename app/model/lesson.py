@@ -1,4 +1,4 @@
-from src.service import TimeService
+from app.service import TimeService
 
 
 class Lesson:

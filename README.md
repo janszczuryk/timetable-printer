@@ -1,5 +1,8 @@
 # Timetable printer
 
+## Prerequisites
+- Python 3.11
+
 ## Install
 ```bash
 python3 -m venv .venv
@@ -8,7 +11,12 @@ pip install -r requirements.txt
 ```
 
 ## Run
+
+Classic approach:
 ```bash
-# Temporary approach
-./src/printer.py
+python3 ./printer.py
 ```
+
+JetBrains IDE approach:
+
+Click *run button* (Shift+F10) when script *printer* is selected.

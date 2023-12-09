@@ -1,7 +1,7 @@
 import re
 from bs4 import BeautifulSoup
-from model import TimeTable, Lesson, WeekType, WeekDayType
-from service import TimeService
+from app.model import TimeTable, Lesson, WeekType, WeekDayType
+from app.service import TimeService
 
 
 def parse(content: bytes, print_at_loading=False) -> None:
