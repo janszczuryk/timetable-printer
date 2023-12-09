@@ -13,16 +13,24 @@ class TimeTable:
         self.week_a = Week()
         self.week_b = Week()
 
+    def get_week_days_index_ordered(self):
+        return [
+            self.week_a.monday,
+            self.week_b.monday,
+            self.week_a.tuesday,
+            self.week_b.tuesday,
+            self.week_a.wednesday,
+            self.week_b.wednesday,
+            self.week_a.thursday,
+            self.week_b.thursday,
+            self.week_a.friday,
+            self.week_b.friday,
+        ]
+
     def print(self):
         print(f"Timetable:  {self.timetable_id}")
         print(f"Teacher:  {self.teacher}")
-        print(f"Week A:")
-        for i, day in enumerate(self.week_a.get_all_days(), 1):
-            print(f"Day: {i}")
-            for lesson in day:
-                print(f"- {lesson.duration * 15} min, {lesson.group_name} {lesson.lesson_name} {lesson.lesson_type} {lesson.room}")
-        print(f"Week B:")
-        for i, day in enumerate(self.week_b.get_all_days(), 1):
-            print(f"Day: {i}")
-            for lesson in day:
-                print(f"- {lesson.duration * 15} min, {lesson.group_name} {lesson.lesson_name} {lesson.lesson_type} {lesson.room}")
+        print("Week A:")
+        self.week_a.print()
+        print("Week B:")
+        self.week_b.print()
