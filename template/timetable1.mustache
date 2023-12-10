@@ -1,0 +1,152 @@
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Podział godzin {{timetable.teacher}}</title>
+    <style>
+        @font-face {
+            font-family: HedvigLettersSerif;
+            src: url('./template/font/HedvigLettersSerif.ttf');
+        }
+
+        @page {
+            size: a4 landscape;
+            margin: .5cm 1cm;
+        }
+
+        html {
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: HedvigLettersSerif, STSong-Light, serif;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+            margin: 0;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .headline {
+            margin: 12px 6px;
+            font-size: 20px;
+        }
+
+        table.timetable th.time {
+            width: 8%;
+        }
+
+        table.timetable {
+            border: 1px solid #000000;
+        }
+
+        table.timetable td {
+            padding: 0 2px;
+        }
+
+    </style>
+</head>
+<body>
+<h1 class="text-center">Podział godzin</h1>
+<p class="text-center">Prowadzący: Jan Kowalski</p>
+
+<p class="headline">Tydzień A (7:00&ndash;12:45):</p>
+<table class="timetable">
+    <thead>
+    <tr>
+        <th class="time">Godzina</th>
+        <th>Poniedziałek</th>
+        <th>Wtorek</th>
+        <th>Środa</th>
+        <th>Czwartek</th>
+        <th>Piątek</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr><td>7:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>7:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>7:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>7:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>8:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>8:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>8:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>8:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>9:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>9:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>9:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>9:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>10:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>10:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>10:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>10:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>11:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>11:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>11:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>11:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>12:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>12:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>12:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>12:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    </tbody>
+</table>
+
+<pdf:nextpage/>
+
+<p class="headline">Tydzień A (13:00&ndash;19:00):</p>
+<table class="timetable">
+    <thead>
+    <tr>
+        <th class="time">Godzina</th>
+        <th>Poniedziałek</th>
+        <th>Wtorek</th>
+        <th>Środa</th>
+        <th>Czwartek</th>
+        <th>Piątek</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr><td>13:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>13:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>13:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>13:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>14:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>14:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>14:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>14:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>15:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>15:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>15:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>15:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>16:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>16:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>16:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>16:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>17:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>17:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>17:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>17:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>18:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>18:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>18:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>18:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>19:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    </tbody>
+</table>
+
+</body>
+</html>
