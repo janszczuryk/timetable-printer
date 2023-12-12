@@ -1,11 +1,11 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Podział godzin {{timetable.teacher}}</title>
+    <title>Podział godzin: {{ teacher }}</title>
     <style>
         @font-face {
             font-family: HedvigLettersSerif;
-            src: url('./template/font/HedvigLettersSerif.ttf');
+            src: url('app/template/font/HedvigLettersSerif.ttf');
         }
 
         @page {
@@ -57,15 +57,16 @@
 
         table.timetable td {
             padding: 0 2px;
+            text-align: center;
         }
 
     </style>
 </head>
 <body>
 <h1 class="text-center">Podział godzin</h1>
-<p class="text-center">Prowadzący: Jan Kowalski</p>
+<p class="text-center">Prowadzący: {{ teacher }}</p>
 
-<p class="headline">Tydzień A (7:00&ndash;12:45):</p>
+<p class="headline">Tydzień A (7:00&ndash;13:00):</p>
 <table class="timetable">
     <thead>
     <tr>
@@ -82,10 +83,10 @@
     <tr><td>7:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
     <tr><td>7:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
     <tr><td>7:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>8:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>8:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>8:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>8:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>8:00</td><td rowspan="4"><p>ABC</p><p>adasads</p></td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>8:15</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>8:30</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+    <tr><td>8:45</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
     <tr><td>9:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
     <tr><td>9:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
     <tr><td>9:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
@@ -107,7 +108,7 @@
 
 <pdf:nextpage/>
 
-<p class="headline">Tydzień A (13:00&ndash;19:00):</p>
+<p class="headline">Tydzień A (13:00&ndash;19:15):</p>
 <table class="timetable">
     <thead>
     <tr>
