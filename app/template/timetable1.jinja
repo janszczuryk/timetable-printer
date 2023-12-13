@@ -66,7 +66,7 @@
 <h1 class="text-center">Podział godzin</h1>
 <p class="text-center">Prowadzący: {{ teacher }}</p>
 
-<p class="headline">Tydzień A (7:00&ndash;13:00):</p>
+<p class="headline">Tydzień A:</p>
 <table class="timetable">
     <thead>
     <tr>
@@ -79,19 +79,22 @@
     </tr>
     </thead>
     <tbody>
-        {% for row in rows %}
+        {% for row in week_a.rows %}
             <tr>
-                <td>{{ row.hour.from }} &ndash; {{ row.hour.to }}</td>
-                {% for lesson in row.week_a %}
-                    <td>
-                        {% if lesson.lesson_id == None %}
-                            <p>{{ lesson.group_name }}</p>
-                            <p>{{ lesson.lesson_name }}</p>
-                            <p>{{ lesson.lesson_type }}</p>
-                        {% else %}
-                            <p>{{ lesson.lesson_name }}</p>
-                        {% endif %}
-                    </td>
+                <td>{{ row.get_hour() }}</td>
+                {% for lesson in row.get_all_lessons() %}
+                    {% if lesson.lesson_type == "lesson" %}
+                        <td rowspan="{{ lesson.duration_index }}">
+                            <p>{{ lesson.description.group_name }}</p>
+                            <p>{{ lesson.description.lesson_name }}</p>
+                            <p>{{ lesson.description.lesson_type }}</p>
+                            <p>{{ lesson.description.room }}</p>
+                        </td>
+                    {% elif lesson.lesson_type == "other" %}
+                        <td>
+                            <p>{{ lesson.description.lesson_name }}</p>
+                        </td>
+                    {% endif %}
                 {% endfor %}
             </tr>
         {% endfor %}
@@ -100,7 +103,7 @@
 
 <pdf:nextpage/>
 
-<p class="headline">Tydzień A (13:00&ndash;19:15):</p>
+<p class="headline">Tydzień B:</p>
 <table class="timetable">
     <thead>
     <tr>
@@ -113,31 +116,25 @@
     </tr>
     </thead>
     <tbody>
-    <tr><td>13:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>13:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>13:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>13:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>14:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>14:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>14:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>14:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>15:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>15:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>15:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>15:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>16:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>16:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>16:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>16:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>17:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>17:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>17:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>17:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>18:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>18:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>18:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>18:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>19:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+        {% for row in week_b.rows %}
+            <tr>
+                <td>{{ row.get_hour() }}</td>
+                {% for lesson in row.get_all_lessons() %}
+                    {% if lesson.lesson_type == "lesson" %}
+                        <td rowspan="{{ lesson.duration_index }}">
+                            <p>{{ lesson.description.group_name }}</p>
+                            <p>{{ lesson.description.lesson_name }}</p>
+                            <p>{{ lesson.description.lesson_type }}</p>
+                            <p>{{ lesson.description.room }}</p>
+                        </td>
+                    {% elif lesson.lesson_type == "other" %}
+                        <td>
+                            <p>{{ lesson.description.lesson_name }}</p>
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
     </tbody>
 </table>
 

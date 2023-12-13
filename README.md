@@ -12,6 +12,11 @@ pip install -r requirements.txt
 
 ## Run
 
+First (temporary) download source timetable, e.g.
+```bash
+wget http://pei.prz.rzeszow.pl/as/Zima2023_teachers_days_horizontal.html
+```
+
 Classic approach:
 ```bash
 python3 ./printer.py
