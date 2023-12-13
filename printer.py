@@ -1,3 +1,5 @@
+import pickle
+
 from app.service import TimeTableParserService, TimeTableRendererService
 
 
@@ -15,8 +17,16 @@ def main() -> None:
     timetable_parser = TimeTableParserService(content)
     timetable = timetable_parser.parse_timetable(table_id)
 
-    timetable_renderer = TimeTableRendererService(timetable)
-    timetable_renderer.render("timetable1")
+    # with open("timetable.pyc", "wb") as timetable_file:
+    #     pickle.dump(timetable, timetable_file)
+
+    # with open("timetable.pyc", "rb") as timetable_file:
+    #     timetable = pickle.load(timetable_file)
+
+    timetable.print()
+
+    # timetable_renderer = TimeTableRendererService(timetable)
+    # timetable_renderer.render("timetable1")
 
 
 if __name__ == "__main__":

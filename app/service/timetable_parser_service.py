@@ -1,7 +1,8 @@
 import re
 from bs4 import BeautifulSoup
 
-from app.model import TimeTable, Lesson, WeekDayType, WeekType
+from app.model import TimeTable, Lesson, LessonDescription
+from app.model.enum import WeekType, WeekDayType, LessonType
 from app.service import TimeService
 
 
@@ -35,23 +36,26 @@ class TimeTableParserService:
                 class_ = column["class"].pop()
 
                 if "notAvailable" in class_ or "empty" in class_:
-                    lesson = Lesson("", row_index, 1, "", column.text.strip(), "", "")
+                    lesson = Lesson("", LessonType.OTHER, row_index, 1, LessonDescription(None, column.text.strip(), None, None))
                 elif re.match("c_[0-9]+", class_):
                     lesson = Lesson(
                         class_,
+                        LessonType.LESSON,
                         row_index,
                         int(column["rowspan"]),
-                        column.find("div", {"class": "line1"}).text.strip(),
-                        column.find("div", {"class": "line2"}).find("span", {"class": "subject"}).text.strip(),
-                        column.find("div", {"class": "line2"}).find("span", {"class": "activitytag"}).text.strip(),
-                        column.find("div", {"class": "line3"}).text.strip() if column.find("div", {
-                            "class": "line3"}) is not None else ""
+                        LessonDescription(
+                            column.find("div", {"class": "line1"}).text.strip(),
+                            column.find("div", {"class": "line2"}).find("span", {"class": "subject"}).text.strip(),
+                            column.find("div", {"class": "line2"}).find("span", {"class": "activitytag"}).text.strip(),
+                            column.find("div", {"class": "line3"}).text.strip() if column.find("div", {
+                                "class": "line3"}) is not None else ""
+                        )
                     )
                 else:
                     continue
 
                 print(
-                    f"{column_index} - Dur: {lesson.duration_index}  {lesson.lesson_name}") if self.logging_enabled else None
+                    f"{column_index} - Dur: {lesson.duration_index}  {lesson.description.lesson_name}") if self.logging_enabled else None
 
                 (week_type, week_day_type) = self._determine_weekday(timetable, row_index)
 

@@ -1,5 +1,5 @@
-from enum import StrEnum, IntEnum
 from .lesson import Lesson
+from .enum import WeekDayType
 
 
 class Week:
@@ -10,11 +10,11 @@ class Week:
     friday: list[Lesson]
 
     def __init__(self):
-        self.monday = list()
-        self.tuesday = list()
-        self.wednesday = list()
-        self.thursday = list()
-        self.friday = list()
+        self.monday = []
+        self.tuesday = []
+        self.wednesday = []
+        self.thursday = []
+        self.friday = []
 
     def print(self):
         for day_index, day in enumerate(self.get_all_days()):
@@ -26,14 +26,3 @@ class Week:
         return [self.monday, self.tuesday, self.wednesday, self.thursday, self.friday]
 
 
-class WeekType(StrEnum):
-    A = 'a'
-    B = 'b'
-
-
-class WeekDayType(IntEnum):
-    MONDAY = 0
-    TUESDAY = 1
-    WEDNESDAY = 2
-    THURSDAY = 3
-    FRIDAY = 4

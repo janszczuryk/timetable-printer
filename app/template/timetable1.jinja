@@ -4,8 +4,8 @@
     <title>Podział godzin: {{ teacher }}</title>
     <style>
         @font-face {
-            font-family: HedvigLettersSerif;
-            src: url('app/template/font/HedvigLettersSerif.ttf');
+            font-family: 'Roboto Mono';
+            src: url('app/template/font/RobotoMono-VariableFont_wght.ttf');
         }
 
         @page {
@@ -16,7 +16,7 @@
         html {
             box-sizing: border-box;
             font-size: 16px;
-            font-family: HedvigLettersSerif, STSong-Light, serif;
+            font-family: 'Roboto Mono', STSong-Light, serif;
         }
 
         *, *:before, *:after {
@@ -48,7 +48,7 @@
         }
 
         table.timetable th.time {
-            width: 8%;
+            width: 14%;
         }
 
         table.timetable {
@@ -79,30 +79,22 @@
     </tr>
     </thead>
     <tbody>
-    <tr><td>7:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>7:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>7:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>7:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>8:00</td><td rowspan="4"><p>ABC</p><p>adasads</p></td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>8:15</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>8:30</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>8:45</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>9:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>9:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>9:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>9:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>10:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>10:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>10:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>10:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>11:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>11:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>11:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>11:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>12:00</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>12:15</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>12:30</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
-    <tr><td>12:45</td><td>ABC</td><td>XYZ</td><td>aaa</td><td>a</td><td>a</td></tr>
+        {% for row in rows %}
+            <tr>
+                <td>{{ row.hour.from }} &ndash; {{ row.hour.to }}</td>
+                {% for lesson in row.week_a %}
+                    <td>
+                        {% if lesson.lesson_id == None %}
+                            <p>{{ lesson.group_name }}</p>
+                            <p>{{ lesson.lesson_name }}</p>
+                            <p>{{ lesson.lesson_type }}</p>
+                        {% else %}
+                            <p>{{ lesson.lesson_name }}</p>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
     </tbody>
 </table>
 

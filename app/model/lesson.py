@@ -1,32 +1,43 @@
+from app.model.enum import LessonType
+from app.model.lesson_description import LessonDescription
 from app.service import TimeService
 
 
 class Lesson:
     lesson_id: str
+    type: LessonType
     start_index: int
     duration_index: int
-    group_name: str
-    lesson_name: str
-    lesson_type: str
-    room: str | None
+    description: LessonDescription | None
 
     def __init__(self,
                  lesson_id: str,
+                 type: LessonType,
                  start_index: int,
                  duration_index: int,
-                 group_name: str,
-                 lesson_name: str,
-                 lesson_type: str,
-                 room: str | None) -> None:
+                 description: LessonDescription | None = None
+                 ):
         self.lesson_id = lesson_id
+        self.type = type
         self.start_index = start_index
         self.duration_index = duration_index
-        self.group_name = group_name
-        self.lesson_name = lesson_name
-        self.lesson_type = lesson_type
-        self.room = room
+        self.description = description
+
+    @staticmethod
+    def create_spanner(row_index: int):
+        return Lesson("span", LessonType.SPANNER, row_index, 1, None)
 
     def print(self) -> None:
-        duration = f"[{TimeService.get_minutes_by_row_index(self.duration_index)} min]" if self.duration_index > 1 else ""
-        print(
-            f"[{TimeService.get_hour_by_row_index(self.start_index)}] {duration} {self.group_name} {self.lesson_name} {self.lesson_type} {self.room}")
+        hour = TimeService.get_hour_by_row_index(self.start_index)
+        match self.type:
+            case LessonType.LESSON:
+                duration = TimeService.get_minutes_by_row_index(self.duration_index)
+                if self.description is None:
+                    raise RuntimeError("Lesson description not defined")
+                print(f"[{hour}] [{duration} min] {self.description.group_name} {self.description.lesson_name} {self.description.lesson_type} {self.description.room}")
+            case LessonType.SPANNER:
+                print(f"[{hour}] Spanner")
+            case LessonType.OTHER:
+                if self.description is None:
+                    raise RuntimeError("Lesson description not defined")
+                print(f"[{hour}] {self.description.lesson_name}")
