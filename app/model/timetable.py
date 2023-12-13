@@ -13,18 +13,20 @@ class TimeTable:
         self.week_a = Week()
         self.week_b = Week()
 
-    def get_week_days_index_ordered(self):
+    def get_last_row_lessons_table_ordered(self):
+        week_a_last_row = self.week_a.get_last_row()
+        week_b_last_row = self.week_b.get_last_row()
         return [
-            self.week_a.monday,
-            self.week_b.monday,
-            self.week_a.tuesday,
-            self.week_b.tuesday,
-            self.week_a.wednesday,
-            self.week_b.wednesday,
-            self.week_a.thursday,
-            self.week_b.thursday,
-            self.week_a.friday,
-            self.week_b.friday,
+            week_a_last_row.monday,
+            week_b_last_row.monday,
+            week_a_last_row.tuesday,
+            week_b_last_row.tuesday,
+            week_a_last_row.wednesday,
+            week_b_last_row.wednesday,
+            week_a_last_row.thursday,
+            week_b_last_row.thursday,
+            week_a_last_row.friday,
+            week_b_last_row.friday,
         ]
 
     def print(self):

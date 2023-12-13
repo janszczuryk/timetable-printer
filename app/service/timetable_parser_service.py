@@ -1,18 +1,17 @@
 import re
 from bs4 import BeautifulSoup
 
-from app.model import TimeTable, Lesson, LessonDescription
-from app.model.enum import WeekType, WeekDayType, LessonType
-from app.service import TimeService
+from app.model import TimeTable, Lesson, LessonDescription, WeekRow
+from app.model.enum import LessonType
 
 
 class TimeTableParserService:
     content: bytes
-    logging_enabled: bool
+    row_index: int
+    row_queue: list[Lesson]
 
-    def __init__(self, content: bytes, logging_enabled: bool = False):
+    def __init__(self, content: bytes):
         self.content = content
-        self.logging_enabled = logging_enabled
 
     def parse_timetable(self, timetable_id: str) -> TimeTable:
         soup = BeautifulSoup(self.content, "html.parser")
@@ -27,7 +26,8 @@ class TimeTableParserService:
         timetable = TimeTable(timetable_id, teacher)
 
         for row_index, row in enumerate(table.find("tbody").find_all("tr")):
-            print(f"[{TimeService.get_hour_by_row_index(row_index)}] ---------------") if self.logging_enabled else None
+
+            self.begin_row(row_index)
 
             for column_index, column in enumerate(row.find_all("td")):
                 if not column.has_attr("class"):
@@ -36,7 +36,8 @@ class TimeTableParserService:
                 class_ = column["class"].pop()
 
                 if "notAvailable" in class_ or "empty" in class_:
-                    lesson = Lesson("", LessonType.OTHER, row_index, 1, LessonDescription(None, column.text.strip(), None, None))
+                    lesson = Lesson("", LessonType.OTHER, row_index, 1,
+                                    LessonDescription(None, column.text.strip(), None, None))
                 elif re.match("c_[0-9]+", class_):
                     lesson = Lesson(
                         class_,
@@ -54,44 +55,50 @@ class TimeTableParserService:
                 else:
                     continue
 
-                print(
-                    f"{column_index} - Dur: {lesson.duration_index}  {lesson.description.lesson_name}") if self.logging_enabled else None
+                self.row_add_lesson(lesson)
 
-                (week_type, week_day_type) = self._determine_weekday(timetable, row_index)
-
-                self._add_lesson(timetable, lesson, week_type, week_day_type)
+            self.commit_row(timetable)
 
         return timetable
 
-    def _determine_weekday(self, timetable: TimeTable, row_index: int) -> (WeekType, WeekDayType):
-        def has_day_free_slot(day: list[Lesson]) -> bool:
-            if len(day) == 0:
-                return True
+    def is_lesson_ended(self, lesson: Lesson) -> bool:
+        return self.row_index >= lesson.start_index + lesson.duration_index
 
-            last_lesson = day[-1]
-            return row_index >= last_lesson.start_index + last_lesson.duration_index
+    def begin_row(self, row_index) -> None:
+        self.row_index = row_index
+        self.row_queue = []
 
-        free_slots_row = list(map(has_day_free_slot, timetable.get_week_days_index_ordered()))
-        free_slot_index = free_slots_row.index(True)
+    def row_add_lesson(self, lesson: Lesson) -> None:
+        self.row_queue.append(lesson)
 
-        week_type = WeekType.A if free_slot_index % 2 == 0 else WeekType.B
-        week_day_type = WeekDayType(free_slot_index // 2)
+    def commit_row(self, timetable: TimeTable) -> None:
+        if len(self.row_queue) == 0:
+            return
 
-        return week_type, week_day_type
+        new_lessons_row = []
 
-    def _add_lesson(self, timetable: TimeTable, lesson: Lesson, week_type: WeekType,
-                    week_day_type: WeekDayType) -> None:
-        match week_day_type:
-            case WeekDayType.MONDAY:
-                day = timetable.week_a.monday if week_type == WeekType.A else timetable.week_b.monday
-            case WeekDayType.TUESDAY:
-                day = timetable.week_a.tuesday if week_type == WeekType.A else timetable.week_b.tuesday
-            case WeekDayType.WEDNESDAY:
-                day = timetable.week_a.wednesday if week_type == WeekType.A else timetable.week_b.wednesday
-            case WeekDayType.THURSDAY:
-                day = timetable.week_a.thursday if week_type == WeekType.A else timetable.week_b.thursday
-            case WeekDayType.FRIDAY:
-                day = timetable.week_a.friday if week_type == WeekType.A else timetable.week_b.friday
-            case _:
-                raise RuntimeError("Unsupported week day")
-        day.append(lesson)
+        if self.row_index == 0:
+            new_lessons_row = self.row_queue.copy()
+        else:
+            self.row_queue.reverse()
+            for last_row_lesson in timetable.get_last_row_lessons_table_ordered():
+                if self.is_lesson_ended(last_row_lesson):
+                    new_lesson = self.row_queue.pop()
+                else:
+                    # NOTE: Spanner Lesson has to consist start_index and duration_index (decremented, one by row)
+                    new_lesson = Lesson.create_spanner(self.row_index, last_row_lesson.duration_index - 1)
+                new_lessons_row.append(new_lesson)
+
+        new_row_week_a = []
+        new_row_week_b = []
+
+        for new_lesson_index, new_lesson in enumerate(new_lessons_row):
+            if new_lesson_index % 2 == 0:
+                new_row_week_a.append(new_lesson)
+            else:
+                new_row_week_b.append(new_lesson)
+
+        timetable.week_a.add_row(WeekRow.create_week_row(self.row_index, new_row_week_a))
+        timetable.week_b.add_row(WeekRow.create_week_row(self.row_index, new_row_week_b))
+
+        self.row_queue = []

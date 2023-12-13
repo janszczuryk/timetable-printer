@@ -1,32 +1,25 @@
-import pickle
-
 from app.service import TimeTableParserService, TimeTableRendererService
 
 
 def main() -> None:
-    # url = "http://pei.prz.rzeszow.pl/as/Zima2023_teachers_days_horizontal.html"
-    # website = requests.get(url)
-
+    # TODO: support script arguments
     input_filename = "Zima2023_teachers_days_horizontal.html"
+    table_id = "table_78"
+    template = "timetable1"
+    output_filename = "table_78.pdf"
+    quiet = True
 
     with open(input_filename, "rb") as file:
         content = file.read()
 
-    table_id = "table_78"
-
     timetable_parser = TimeTableParserService(content)
     timetable = timetable_parser.parse_timetable(table_id)
 
-    # with open("timetable.pyc", "wb") as timetable_file:
-    #     pickle.dump(timetable, timetable_file)
+    if not quiet:
+        timetable.print()
 
-    # with open("timetable.pyc", "rb") as timetable_file:
-    #     timetable = pickle.load(timetable_file)
-
-    timetable.print()
-
-    # timetable_renderer = TimeTableRendererService(timetable)
-    # timetable_renderer.render("timetable1")
+    timetable_renderer = TimeTableRendererService(timetable)
+    timetable_renderer.render(template, output_filename)
 
 
 if __name__ == "__main__":

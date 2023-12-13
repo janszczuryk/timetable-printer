@@ -1,28 +1,19 @@
-from .lesson import Lesson
-from .enum import WeekDayType
+from .week_row import WeekRow
 
 
 class Week:
-    monday: list[Lesson]
-    tuesday: list[Lesson]
-    wednesday: list[Lesson]
-    thursday: list[Lesson]
-    friday: list[Lesson]
+    rows: list[WeekRow]
 
     def __init__(self):
-        self.monday = []
-        self.tuesday = []
-        self.wednesday = []
-        self.thursday = []
-        self.friday = []
+        self.rows = []
 
-    def print(self):
-        for day_index, day in enumerate(self.get_all_days()):
-            print(f"Day: {WeekDayType(day_index).name}")
-            for lesson in day:
-                lesson.print()
+    def print(self) -> None:
+        print("[xx:xx]\tMonday\tTuesday\tWednesday\tThursday\tFriday")
+        for row in self.rows:
+            row.print()
 
-    def get_all_days(self):
-        return [self.monday, self.tuesday, self.wednesday, self.thursday, self.friday]
+    def get_last_row(self) -> WeekRow:
+        return self.rows[-1]
 
-
+    def add_row(self, row: WeekRow) -> None:
+        self.rows.append(row)
