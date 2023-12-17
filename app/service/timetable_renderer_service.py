@@ -13,9 +13,9 @@ class TimeTableRendererService:
         self.timetable = timetable
         self.enable_logging = enable_logging
 
-    def render(self, template: str, output_filename: str = "") -> None:
+    def render(self, template: str, output_filename: str) -> None:
         source_html = self._render_html(template)
-        self._render_pdf(source_html, output_filename or f"{self.timetable.timetable_id}.pdf")
+        self._render_pdf(source_html, output_filename)
 
     def _render_html(self, template: str) -> str:
         env = Environment(
