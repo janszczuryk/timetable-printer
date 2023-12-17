@@ -19,13 +19,10 @@ class WeekRow:
         self.thursday = thursday
         self.friday = friday
 
-    def print(self) -> None:
+    def __str__(self) -> str:
         hour = TimeService.get_hour_by_row_index(self.row_index)
-        print(f"[{hour}]", end="")
-        for lesson in self.get_all_lessons():
-            print("\t", end="")
-            lesson.print()
-        print("")
+        all_lessons = self.get_all_lessons()
+        return '\t'.join(list(map(lambda item: str(item), [hour, *all_lessons])))
 
     def get_all_lessons(self) -> list[Lesson]:
         return [self.monday, self.tuesday, self.wednesday, self.thursday, self.friday]
@@ -34,6 +31,9 @@ class WeekRow:
         start_hour = TimeService.get_hour_by_row_index(self.row_index)
         end_hour = TimeService.get_hour_by_row_index(self.row_index + 1)
         return f"{start_hour} &mdash; {end_hour}"
+
+    def get_hour_short(self) -> str:
+        return TimeService.get_hour_by_row_index(self.row_index)
 
     @staticmethod
     def create_week_row(row_index: int, lessons: list[Lesson]):

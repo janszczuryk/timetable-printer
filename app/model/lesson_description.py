@@ -9,3 +9,6 @@ class LessonDescription:
         self.lesson_name = lesson_name
         self.lesson_type = lesson_type
         self.room = room
+
+    def __str__(self) -> str:
+        return f'{self.group_name or ""} {self.lesson_name or ""} {self.lesson_type} {self.room or ""}'

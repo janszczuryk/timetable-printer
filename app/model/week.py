@@ -1,3 +1,4 @@
+from tabulate import tabulate
 from .week_row import WeekRow
 
 
@@ -8,9 +9,13 @@ class Week:
         self.rows = []
 
     def print(self) -> None:
-        print("[xx:xx]\tMonday\tTuesday\tWednesday\tThursday\tFriday")
-        for row in self.rows:
-            row.print()
+        print(self)
+
+    def __str__(self) -> str:
+        headers = ['Hour', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        col = [5, 15, 15, 15, 15, 15]
+        printable_rows = list(map(lambda row: [row.get_hour_short(), row.monday, row.tuesday, row.wednesday, row.thursday, row.friday], self.rows))
+        return tabulate(printable_rows, headers=headers, maxcolwidths=col, tablefmt='simple_grid')
 
     def get_last_row(self) -> WeekRow:
         return self.rows[-1]

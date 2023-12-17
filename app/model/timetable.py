@@ -13,6 +13,18 @@ class TimeTable:
         self.week_a = Week()
         self.week_b = Week()
 
+    def __str__(self) -> str:
+        return f"""\
+Timetable: {self.timetable_id}
+Teacher: {self.teacher}
+
+Week A:
+{str(self.week_a)}
+
+Week B:
+{str(self.week_b)}
+"""
+
     def get_last_row_lessons_table_ordered(self):
         week_a_last_row = self.week_a.get_last_row()
         week_b_last_row = self.week_b.get_last_row()
@@ -29,10 +41,5 @@ class TimeTable:
             week_b_last_row.friday,
         ]
 
-    def print(self):
-        print(f"Timetable:  {self.timetable_id}")
-        print(f"Teacher:  {self.teacher}")
-        print("Week A:")
-        self.week_a.print()
-        print("Week B:")
-        self.week_b.print()
+    def print(self) -> None:
+        print(self)

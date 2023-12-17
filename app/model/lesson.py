@@ -28,17 +28,18 @@ class Lesson:
         return Lesson("spanner", LessonType.SPANNER, start_index, duration_index, None)
 
     def print(self) -> None:
+        print(self)
+
+    def __str__(self) -> str:
         match self.lesson_type:
             case LessonType.LESSON:
                 duration = TimeService.get_minutes_by_row_index(self.duration_index)
                 if self.description is None:
                     raise RuntimeError("Lesson description not defined")
-                print(
-                    f"[{duration} min] {self.description.group_name} {self.description.lesson_name} {self.description.lesson_type} {self.description.room}",
-                    end="")
+                return f"[{duration} min] {self.description.group_name} {self.description.lesson_name} {self.description.lesson_type} {self.description.room}"
             case LessonType.SPANNER:
-                print(f"Spanner", end="")
+                return f"Spanner"
             case LessonType.OTHER:
                 if self.description is None:
                     raise RuntimeError("Lesson description not defined")
-                print(f"{self.description.lesson_name}", end="")
+                return f"{self.description.lesson_name}"
