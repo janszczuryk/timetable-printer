@@ -81,7 +81,7 @@
     <tbody>
         {% for row in week_a.rows %}
             <tr>
-                <td>{{ row.get_hour() }}</td>
+                <td>{{ row.get_hour_start() }}&mdash;{{ row.get_hour_end() }}</td>
                 {% for lesson in row.get_all_lessons() %}
                     {% if lesson.lesson_type == "lesson" %}
                         <td rowspan="{{ lesson.duration_index }}">
@@ -118,7 +118,7 @@
     <tbody>
         {% for row in week_b.rows %}
             <tr>
-                <td>{{ row.get_hour() }}</td>
+                <td>{{ row.get_hour_start() }}&mdash;{{ row.get_hour_end() }}</td>
                 {% for lesson in row.get_all_lessons() %}
                     {% if lesson.lesson_type == "lesson" %}
                         <td rowspan="{{ lesson.duration_index }}">

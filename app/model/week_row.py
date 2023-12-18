@@ -27,13 +27,11 @@ class WeekRow:
     def get_all_lessons(self) -> list[Lesson]:
         return [self.monday, self.tuesday, self.wednesday, self.thursday, self.friday]
 
-    def get_hour(self) -> str:
-        start_hour = TimeService.get_hour_by_row_index(self.row_index)
-        end_hour = TimeService.get_hour_by_row_index(self.row_index + 1)
-        return f"{start_hour} &mdash; {end_hour}"
-
-    def get_hour_short(self) -> str:
+    def get_hour_start(self) -> str:
         return TimeService.get_hour_by_row_index(self.row_index)
+
+    def get_hour_end(self) -> str:
+        return TimeService.get_hour_by_row_index(self.row_index + 1)
 
     @staticmethod
     def create_week_row(row_index: int, lessons: list[Lesson]):

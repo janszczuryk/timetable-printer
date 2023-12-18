@@ -1,0 +1,142 @@
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Podział godzin: {{ teacher }}</title>
+    <style>
+        @font-face {
+            font-family: 'Roboto Mono';
+            src: url('app/template/font/RobotoMono-VariableFont_wght.ttf');
+        }
+
+        @page {
+            size: a4 portrait;
+            margin: .5cm 1cm;
+        }
+
+        html {
+            box-sizing: border-box;
+            font-size: 9pt;
+            font-family: 'Roboto Mono', STSong-Light, serif;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+            margin: 0;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .headline {
+            margin: 12px 6px;
+            font-size: 1.25rem;
+        }
+
+        table.timetable th.time {
+            width: 12%;
+        }
+
+        table.timetable {
+            border: 1px solid #000000;
+        }
+
+        table.timetable td {
+            padding: 0 2px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<h1 class="text-center">Podział godzin</h1>
+<p class="text-center">Prowadzący: {{ teacher }}</p>
+
+<p class="headline">Tydzień A:</p>
+<table class="timetable">
+    <thead>
+    <tr>
+        <th class="time">Godzina</th>
+        <th>Poniedziałek</th>
+        <th>Wtorek</th>
+        <th>Środa</th>
+        <th>Czwartek</th>
+        <th>Piątek</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for row in week_a.rows %}
+            <tr>
+                <td>{{ row.get_hour_start() }}&mdash;{{ row.get_hour_end() }}</td>
+                {% for lesson in row.get_all_lessons() %}
+                    {% if lesson.lesson_type == "lesson" %}
+                        <td rowspan="{{ lesson.duration_index }}">
+                            <p>{{ lesson.description.group_name }}</p>
+                            <p>{{ lesson.description.lesson_name }}</p>
+                            <p>{{ lesson.description.lesson_type }}</p>
+                            <p>{{ lesson.description.room }}</p>
+                        </td>
+                    {% elif lesson.lesson_type == "other" %}
+                        <td>
+                            <p>{{ lesson.description.lesson_name }}</p>
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<pdf:nextpage/>
+
+<p class="headline">Tydzień B:</p>
+<table class="timetable">
+    <thead>
+    <tr>
+        <th class="time">Godzina</th>
+        <th>Poniedziałek</th>
+        <th>Wtorek</th>
+        <th>Środa</th>
+        <th>Czwartek</th>
+        <th>Piątek</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for row in week_b.rows %}
+            <tr>
+                <td>{{ row.get_hour_start() }}&mdash;{{ row.get_hour_end() }}</td>
+                {% for lesson in row.get_all_lessons() %}
+                    {% if lesson.lesson_type == "lesson" %}
+                        <td rowspan="{{ lesson.duration_index }}">
+                            <p>{{ lesson.description.group_name }}</p>
+                            <p>{{ lesson.description.lesson_name }}</p>
+                            <p>{{ lesson.description.lesson_type }}</p>
+                            <p>{{ lesson.description.room }}</p>
+                        </td>
+                    {% elif lesson.lesson_type == "other" %}
+                        <td>
+                            <p>{{ lesson.description.lesson_name }}</p>
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

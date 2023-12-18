@@ -22,7 +22,7 @@ def parse_arguments() -> argparse.Namespace:
                         help='timetable\'s id inside html file')
     parser.add_argument('-t', '--template',
                         required=False,
-                        default='timetable1',
+                        default='portrait1',
                         help='template to be used to generate pdf file')
     parser.add_argument('-q', '--quiet',
                         required=False,
